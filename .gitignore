@@ -1,0 +1,19 @@
+# Ignore everything
+*
+
+# But not these files...
+!CODEOWNERS
+!LICENSE
+!README.md
+!/.gitignore
+!.licignore
+!.golangci
+!*.yaml
+!Makefile
+!*.go
+!go.mod
+!go.sum
+
+# ...even if they are in subdirectories
+!*/
+
