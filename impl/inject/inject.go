@@ -1,5 +1,5 @@
 /*
-Copyright 2021 ABSA Group Limited
+Copyright 2021 Absa Group Limited
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -78,12 +78,16 @@ func read(f string) (s string, err error) {
 }
 
 func (i *Inject) traverse() {
+	skipped := 0
+	visited := 0
 	p := func(path string, i gitignore.GitIgnore, o Options, config *Config) (err error) {
 		if !i.Ignore(path) {
 			var skip bool
 			symbol := ""
+			visited++
 			if err,skip  = inject(path,o, config); skip {
 				symbol = "-> skip"
+				skipped++
 			}
 			emoji.Printf(" %s  %s %s  \n",emoji.Minus, aurora.BrightYellow(path), aurora.BrightMagenta(symbol))
 		}
@@ -103,6 +107,16 @@ func (i *Inject) traverse() {
 	if err != nil {
 		logger.Err(err).Msg("")
 	}
+	summary(skipped,visited)
+}
+
+
+func summary(skipped, visited int) {
+	if skipped == visited {
+		fmt.Printf("\n %s %v/%v %s\n\n", emoji.Ice, aurora.BrightCyan(visited-skipped), aurora.BrightWhite(visited), aurora.BrightBlue("changed"))
+		return
+	}
+	fmt.Printf("\n %s %v/%v %s\n\n", emoji.Fire, aurora.BrightMagenta(visited-skipped), aurora.BrightWhite(visited), aurora.BrightYellow("changed"))
 }
 
 func inject(path string, o Options, config *Config) (err error, skip bool) {
