@@ -1,6 +1,6 @@
 module github.com/AbsaOSS/golic
 
-go 1.15
+go 1.16
 
 require (
 	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect
