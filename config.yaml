@@ -63,7 +63,7 @@ golic:
       prefix: "#"
     .yml:
       prefix: "#"
-    Dockerfile:
+    Dockerfile*:
       prefix: "#"
     Makefile:
       prefix: "#"

@@ -160,13 +160,29 @@ func headerContains(header string, values []string) bool{
 	return false
 }
 
-func getCommentedLicense(config *Config, o Options, rule string) (string, error) {
+func matchRule(config *Config, fileName string) (rule string, ok bool) {
+	if _, ok = config.Golic.Rules[fileName]; ok {
+		return fileName, ok
+	}
+	// if rule is pattern like Dockerfile*
+	for k := range config.Golic.Rules {
+		matched, _ := filepath.Match(k, fileName)
+		if matched {
+			return k, true
+		}
+	}
+	return
+}
+
+func getCommentedLicense(config *Config, o Options, file string) (string, error) {
 	var ok bool
 	var template string
+	var rule string
 	if template, ok = config.Golic.Licenses[o.Template]; !ok {
 		return "",fmt.Errorf("no license found for %s, check configuration (%s)",o.Template,o.ConfigURL)
 	}
-	if _, ok = config.Golic.Rules[rule]; !ok {
+	//if _, ok =  config.Golic.Rules[rule]; !ok {
+	if rule, ok =  matchRule(config, file); !ok {
 		return "",fmt.Errorf("no rule found for %s, check configuration (%s)", rule,o.ConfigURL)
 	}
 	template = strings.ReplaceAll(template,"{{copyright}}", o.Copyright)
