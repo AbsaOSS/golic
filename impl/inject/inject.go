@@ -56,8 +56,18 @@ func (i *Inject) Run() (err error) {
 	if err != nil {
 		return err
 	}
-	logger.Info().Msgf("%s reading %s",emoji.OpenBook, i.opts.ConfigURL)
-	if i.cfg, err = i.readConfig(); err != nil {
+	logger.Info().Msgf("%s reading %s",emoji.OpenBook, aurora.BrightCyan(i.opts.ConfigURL))
+	if i.cfg, err = i.readCommonConfig(); err != nil {
+		return
+	}
+	if _, err = os.Stat(i.opts.ConfigPath); !os.IsNotExist(err) {
+		logger.Info().Msgf("%s reading %s",emoji.OpenBook, aurora.BrightCyan(i.opts.ConfigPath))
+		logger.Info().Msgf("%s overriding %s with %s",
+			emoji.ConstructionWorker, aurora.BrightCyan(i.opts.ConfigURL),aurora.BrightCyan(i.opts.ConfigPath))
+		if i.cfg, err = i.readLocalConfig(); err != nil {
+			return
+		}
+	} else {
 		return
 	}
 	i.traverse()
@@ -221,7 +231,27 @@ func getRule(path string) (rule string) {
 	return
 }
 
-func (i *Inject) readConfig() (c *Config, err error) {
+func (i *Inject) readLocalConfig() (*Config, error) {
+	var c = &Config{}
+	var rc = *i.cfg
+	yamlFile, err := ioutil.ReadFile(i.opts.ConfigPath)
+	if err != nil {
+		return nil,nil
+	}
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		return nil,nil
+	}
+	for k,v := range c.Golic.Licenses {
+		rc.Golic.Licenses[k] = v
+	}
+	for k,v := range c.Golic.Rules {
+		rc.Golic.Rules[k] = v
+	}
+	return &rc,nil
+}
+
+func (i *Inject) readCommonConfig() (c *Config, err error) {
 	var client http.Client
 	var resp *http.Response
 	var b []byte

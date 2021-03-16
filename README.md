@@ -8,7 +8,7 @@ golic inject -c="2021 MyCompany ltd." --dry
 
 ## Running from commandline
 
-create `.licignore`
+create `.licignore` in project root
 ```shell
 # Ignore everything
 *
@@ -24,7 +24,7 @@ create `.licignore`
 Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.3.1
+go install github.com/AbsaOSS/golic@v0.4.0
 golic inject -c="2021 MyCompany ltd."
 ```
 
@@ -34,18 +34,35 @@ Usage:
    inject [flags]
 
 Flags:
-  -u, --config-url string   config URL (default "https://raw.githubusercontent.com/AbsaOSS/golic/main/config.yaml")
-  -c, --copyright string    company initials entered into license (default "2021 MyCompany")
-  -d, --dry                 dry run
-  -h, --help                help for inject
-  -l, --licignore string    .licignore path (default ".licignore")
-  -t, --template string     license key (default "apache2")
+  -p, --config-path string   path to the local configuration overriding config-url (default ".golic.yaml")
+  -u, --config-url string    default config URL (default "https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml")
+  -c, --copyright string     company initials entered into license (default "2021 MyCompany")
+  -d, --dry                  dry run
+  -h, --help                 help for inject
+  -l, --licignore string     .licignore path (default ".licignore")
+  -t, --template string      license key (default "apache2")
+
 
 Global Flags:
   -v, --verbose   verbose output
 ```
 
 ## Configuration
-For more details see: [default configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/config.yaml). 
-Use `-u` flag to run against custom configuration or create PR. 
+Golic uses [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) by default.
+The master configuration is accessible from the URL, and if you need to change it, use the `-u` flag or create PR.
+However, it is much better to create a local configuration that overrides the master configuration settings. All 
+you have to do is create a `.golic.yaml` file in the project root, or use the` -p` flag.
+Example below overrides master configuration by custom licenses
+```yaml
+# .golic.yaml 
+golic:
+  licenses:
+    apache2: |
+      Copyright {{copyright}}
+
+      This is my custom license text
+    apacheX: |
+      Copyright {{copyright}}
+      for more details see https://github.com/mycompany/myproject/LICENSE
+```
 

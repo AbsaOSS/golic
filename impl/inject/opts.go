@@ -22,5 +22,6 @@ type Options struct {
 	Copyright string
 	Dry       bool
 	ConfigURL string
+	ConfigPath string
 	Template  string
 }

@@ -54,6 +54,7 @@ func init() {
 	injectCmd.Flags().StringVarP(&injectOptions.Copyright, "copyright", "c", "2021 MyCompany",
 		"company initials entered into license")
 	injectCmd.Flags().BoolVarP(&injectOptions.Dry, "dry", "d", false, "dry run")
-	injectCmd.Flags().StringVarP(&injectOptions.ConfigURL, "config-url", "u", "https://raw.githubusercontent.com/AbsaOSS/golic/main/config.yaml", "config URL")
+	injectCmd.Flags().StringVarP(&injectOptions.ConfigURL, "config-url", "u", "https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml", "default config URL")
+	injectCmd.Flags().StringVarP(&injectOptions.ConfigPath, "config-path","p", ".golic.yaml","path to the local configuration overriding config-url" )
 	rootCmd.AddCommand(injectCmd)
 }

@@ -13,4 +13,5 @@
 
 # except these in subdirs
 /**/.gitignore
+/**/*golic.yaml
 /.idea/**/*.xml
