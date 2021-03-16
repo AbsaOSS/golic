@@ -196,7 +196,11 @@ func getCommentedLicense(config *Config, o Options, file string) (string, error)
 	// `\r\n` -> `\r\n #`, `\n` -> `\n #`
 	content := strings.ReplaceAll(template,"\n",fmt.Sprintf("\n%s ", config.Golic.Rules[rule].Prefix))
 	content = strings.TrimSuffix(content, config.Golic.Rules[rule].Prefix+" ")
-	return config.Golic.Rules[rule].Prefix + " " + content,nil
+	content = config.Golic.Rules[rule].Prefix + " " + content
+	// "# \n" -> "#\n" // "# \r\n" -> "#\r\n"; some environments automatically remove spaces in empty lines. This makes problems in license PR's
+	content = strings.ReplaceAll(content,fmt.Sprintf("%s \n",config.Golic.Rules[rule].Prefix),fmt.Sprintf("%s\n",config.Golic.Rules[rule].Prefix))
+	content = strings.ReplaceAll(content,fmt.Sprintf("%s \r\n",config.Golic.Rules[rule].Prefix),fmt.Sprintf("%s\r\n",config.Golic.Rules[rule].Prefix))
+	return content,nil
 }
 
 func splitSource(source string) (firstLine, rest string){

@@ -14,16 +14,17 @@ create `.licignore`
 *
 
 # But not these files...
+!Dockerfile*
 !Makefile
 !*.go
 
 # ...even if they are in subdirectories
 !*/
 ````
-And run **GOLIC**
+Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.3.0
+go install github.com/AbsaOSS/golic@v0.3.1
 golic inject -c="2021 MyCompany ltd."
 ```
 
