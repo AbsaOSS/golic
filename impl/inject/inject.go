@@ -68,7 +68,8 @@ func (i *Inject) Run() (err error) {
 			return
 		}
 	} else {
-		return
+		logger.Info().Msgf("%s skipping local %s",emoji.FileFolder, aurora.BrightCyan(i.opts.ConfigPath))
+		err = nil
 	}
 	i.traverse()
 	return
