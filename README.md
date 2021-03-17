@@ -24,7 +24,7 @@ create `.licignore` in project root
 Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.4.3
+go install github.com/AbsaOSS/golic@v0.4.4
 golic inject -c="2021 MyCompany ltd."
 ```
 

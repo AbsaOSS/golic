@@ -21,7 +21,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/enescakir/emoji"
 	"os"
 
 	"github.com/AbsaOSS/golic/utils/log"
@@ -48,11 +47,6 @@ var rootCmd = &cobra.Command{
 		}
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
-		if exitCode == 0 {
-			logger.Info().Msgf("%s%s%s done", emoji.Rocket, emoji.Rocket, emoji.Rocket)
-		} else {
-			logger.Info().Msgf("%s exit", emoji.FaceScreamingInFear)
-		}
 		os.Exit(exitCode)
 	},
 }
