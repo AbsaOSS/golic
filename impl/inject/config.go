@@ -21,9 +21,10 @@ type Config struct {
 	Golic struct{
 		Licenses map[string]string `yaml:"licenses"`
 		Rules    map[string]struct {
-			Prefix string `yaml:"prefix"`
-			Suffix string `yaml:"suffix"`
-			Under []string `yaml:"under"`
+			Prefix string   `yaml:"prefix"`
+			Suffix string   `yaml:"suffix"`
+			Under  []string `yaml:"under"`
+			Indent string   `yaml:"indent"` // if NO_INDENT value, than indent is ""
 		} `yaml:"rules"`
 	} `yaml:"golic"`
 }

@@ -35,6 +35,8 @@ var ctx = context.Background()
 
 var logger = log.Log
 
+var exitCode = 0
+
 var rootCmd = &cobra.Command{
 	Short: "golic license injector",
 	Long:  ``,
@@ -46,7 +48,12 @@ var rootCmd = &cobra.Command{
 		}
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
-		logger.Info().Msgf("done %3s%s%s", emoji.Rocket,emoji.Rocket,emoji.Rocket)
+		if exitCode == 0 {
+			logger.Info().Msgf("done %s%s%s", emoji.Rocket, emoji.Rocket, emoji.Rocket)
+		} else {
+			logger.Info().Msgf("done with changes %s", emoji.FaceScreamingInFear)
+		}
+		os.Exit(exitCode)
 	},
 }
 

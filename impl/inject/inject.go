@@ -35,10 +35,11 @@ import (
 )
 
 type Inject struct {
-	opts   Options
-	ctx    context.Context
-	ignore gitignore.GitIgnore
-	cfg *Config
+	opts     Options
+	ctx      context.Context
+	ignore   gitignore.GitIgnore
+	cfg      *Config
+	modified int
 }
 
 var logger = log.Log
@@ -77,6 +78,13 @@ func (i *Inject) Run() (err error) {
 
 func (i *Inject) String() string {
 	return aurora.BrightCyan("inject").String()
+}
+
+func (i *Inject) ExitCode() int {
+	if i.opts.ModifiedExitStatus && i.modified != 0 {
+		return 1
+	}
+	return 0
 }
 
 func read(f string) (s string, err error) {
@@ -118,6 +126,7 @@ func (i *Inject) traverse() {
 	if err != nil {
 		logger.Err(err).Msg("")
 	}
+	i.modified = visited - skipped
 	summary(skipped,visited)
 }
 
@@ -205,9 +214,16 @@ func getCommentedLicense(config *Config, o Options, file string) (string, error)
 			nil
 	}
 	// `\r\n` -> `\r\n #`, `\n` -> `\n #`
-	content := strings.ReplaceAll(template,"\n",fmt.Sprintf("\n%s ", config.Golic.Rules[rule].Prefix))
-	content = strings.TrimSuffix(content, config.Golic.Rules[rule].Prefix+" ")
-	content = config.Golic.Rules[rule].Prefix + " " + content
+	var indent string
+	switch config.Golic.Rules[rule].Indent {
+	case "NO_INDENT": indent = ""
+	case "":  indent = " "
+	default: indent = config.Golic.Rules[rule].Indent
+	}
+
+	content := strings.ReplaceAll(template,"\n",fmt.Sprintf("\n%s%s", config.Golic.Rules[rule].Prefix,indent))
+	content = strings.TrimSuffix(content, config.Golic.Rules[rule].Prefix+indent)
+	content = config.Golic.Rules[rule].Prefix + indent + content
 	// "# \n" -> "#\n" // "# \r\n" -> "#\r\n"; some environments automatically remove spaces in empty lines. This makes problems in license PR's
 	content = strings.ReplaceAll(content,fmt.Sprintf("%s \n",config.Golic.Rules[rule].Prefix),fmt.Sprintf("%s\n",config.Golic.Rules[rule].Prefix))
 	content = strings.ReplaceAll(content,fmt.Sprintf("%s \r\n",config.Golic.Rules[rule].Prefix),fmt.Sprintf("%s\r\n",config.Golic.Rules[rule].Prefix))
