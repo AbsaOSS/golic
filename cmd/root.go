@@ -49,9 +49,9 @@ var rootCmd = &cobra.Command{
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
 		if exitCode == 0 {
-			logger.Info().Msgf("done %s%s%s", emoji.Rocket, emoji.Rocket, emoji.Rocket)
+			logger.Info().Msgf("%s%s%s done", emoji.Rocket, emoji.Rocket, emoji.Rocket)
 		} else {
-			logger.Info().Msgf("done with changes %s", emoji.FaceScreamingInFear)
+			logger.Info().Msgf("%s exit", emoji.FaceScreamingInFear)
 		}
 		os.Exit(exitCode)
 	},

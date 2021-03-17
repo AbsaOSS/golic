@@ -103,12 +103,14 @@ func (i *Inject) traverse() {
 		if !i.Ignore(path) {
 			var skip bool
 			symbol := ""
+			cp := aurora.BrightYellow(path)
 			visited++
 			if err,skip  = inject(path,o, config); skip {
 				symbol = "-> skip"
+				cp = aurora.Magenta(path)
 				skipped++
 			}
-			emoji.Printf(" %s  %s %s  \n",emoji.Minus, aurora.BrightYellow(path), aurora.BrightMagenta(symbol))
+			emoji.Printf(" %s  %s %s  \n",emoji.Minus, cp, aurora.BrightMagenta(symbol))
 		}
 		return
 	}
@@ -133,10 +135,10 @@ func (i *Inject) traverse() {
 
 func summary(skipped, visited int) {
 	if skipped == visited {
-		fmt.Printf("\n %s %v/%v %s\n\n", emoji.Ice, aurora.BrightCyan(visited-skipped), aurora.BrightWhite(visited), aurora.BrightBlue("changed"))
+		fmt.Printf("\n %s %v/%v %s\n\n", emoji.Ice, aurora.BrightCyan(visited-skipped), aurora.BrightWhite(visited), aurora.BrightCyan("changed"))
 		return
 	}
-	fmt.Printf("\n %s %v/%v %s\n\n", emoji.Fire, aurora.BrightMagenta(visited-skipped), aurora.BrightWhite(visited), aurora.BrightYellow("changed"))
+	fmt.Printf("\n %s %v/%v %s\n\n", emoji.Fire, aurora.BrightYellow(visited-skipped), aurora.BrightWhite(visited), aurora.BrightYellow("changed"))
 }
 
 func inject(path string, o Options, config *Config) (err error, skip bool) {
