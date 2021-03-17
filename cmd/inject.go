@@ -29,7 +29,7 @@ var injectOptions inject.Options
 
 var injectCmd = &cobra.Command{
 	Use:   "inject",
-	Short: "",
+	Short: "Injects license",
 	Long:  ``,
 
 	Run: func(cmd *cobra.Command, args []string) {
