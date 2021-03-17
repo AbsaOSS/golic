@@ -44,11 +44,13 @@ var injectCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		i := inject.New(ctx, injectOptions)
-		Command(i).MustRun()
+		exitCode = Command(i).MustRun()
 	},
 }
 
 func init() {
+	injectCmd.Flags().BoolVarP(&injectOptions.ModifiedExitStatus, "modified-exit", "x", false,
+		"If enabled, exits with status 1 when any file is modified. The settings is used by CI")
 	injectCmd.Flags().StringVarP(&injectOptions.LicIgnore, "licignore", "l", ".licignore", ".licignore path")
 	injectCmd.Flags().StringVarP(&injectOptions.Template, "template", "t", "apache2", "license key")
 	injectCmd.Flags().StringVarP(&injectOptions.Copyright, "copyright", "c", "2021 MyCompany",

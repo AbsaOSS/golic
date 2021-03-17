@@ -30,7 +30,16 @@ golic inject -c="2021 MyCompany ltd."
 
 ## Usage
 ```
-Usage:
+Available Commands:
+  help        Help about any command
+  inject      Injects license
+  version     Print the version number of Golic
+
+Flags:
+  -h, --help      help for this command
+  -v, --verbose   verbose output
+
+Usage inject:
    inject [flags]
 
 Flags:
@@ -40,6 +49,7 @@ Flags:
   -d, --dry                  dry run
   -h, --help                 help for inject
   -l, --licignore string     .licignore path (default ".licignore")
+  -x, --modified-exit        If enabled, exits with status 1 when any file is modified. The settings is used by CI
   -t, --template string      license key (default "apache2")
 
 

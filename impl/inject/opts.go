@@ -24,4 +24,5 @@ type Options struct {
 	ConfigURL string
 	ConfigPath string
 	Template  string
+	ModifiedExitStatus bool
 }
