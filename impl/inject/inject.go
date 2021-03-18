@@ -146,7 +146,7 @@ func inject(path string, o Options, config *Config) (err error, skip bool) {
 	if err != nil {
 		return err,false
 	}
-	rule := getRule(path)
+	rule := getRule(config, path)
 	license,err := getCommentedLicense(config, o, rule)
 	if err != nil {
 		return err, false
@@ -236,7 +236,14 @@ func splitSource(source string) (firstLine, rest string){
 	return "",source
 }
 
-func getRule(path string) (rule string) {
+func getRule(config *Config, path string) (rule string) {
+	fileName := filepath.Base(path)
+	for k := range config.Golic.Rules {
+		matched, _ := filepath.Match(k, fileName)
+		if matched {
+			return k
+		}
+	}
 	rule = filepath.Ext(path)
 	if rule == "" {
 		rule = filepath.Base(path)
