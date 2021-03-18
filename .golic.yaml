@@ -60,21 +60,21 @@ golic:
       prefix: "/*"
       suffix: "*/"
     .yaml:
-      prefix: "#"
+      prefix: "# "
     .yml:
-      prefix: "#"
+      prefix: "# "
     Dockerfile*:
-      prefix: "#"
+      prefix: "# "
     Makefile:
-      prefix: "#"
+      prefix: "# "
     .gitignore:
-      prefix: "#"
+      prefix: "# "
     .licignore:
-      prefix: "#"
+      prefix: "# "
     .tf:
-      prefix: "#"
+      prefix: "# "
     .sh:
-      prefix: "#"
+      prefix: "# "
       under:
         - "!/bin/sh"
         - "!/bin/bash"

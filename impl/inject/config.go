@@ -24,7 +24,6 @@ type Config struct {
 			Prefix string   `yaml:"prefix"`
 			Suffix string   `yaml:"suffix"`
 			Under  []string `yaml:"under"`
-			Indent string   `yaml:"indent"` // if NO_INDENT value, than indent is ""
 		} `yaml:"rules"`
 	} `yaml:"golic"`
 }
