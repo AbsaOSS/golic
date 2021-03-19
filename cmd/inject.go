@@ -19,12 +19,12 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/logrusorgru/aurora"
 	"os"
 
 	"github.com/AbsaOSS/golic/impl/inject"
 
 	"github.com/enescakir/emoji"
+	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 )
 

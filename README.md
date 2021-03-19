@@ -105,4 +105,3 @@ Flags:
 Global Flags:
   -v, --verbose   verbose output
 ```
-
