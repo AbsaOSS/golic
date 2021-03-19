@@ -22,7 +22,6 @@ import (
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -57,14 +56,14 @@ func (i *Inject) Run() (err error) {
 	if err != nil {
 		return err
 	}
-	logger.Info().Msgf("%s reading %s",emoji.OpenBook, aurora.BrightCyan(i.opts.ConfigURL))
+	logger.Info().Msgf("%s reading %s; use --verbose to see details",emoji.OpenBook, aurora.BrightCyan("master config"))
 	if i.cfg, err = i.readCommonConfig(); err != nil {
 		return
 	}
 	if _, err = os.Stat(i.opts.ConfigPath); !os.IsNotExist(err) {
 		logger.Info().Msgf("%s reading %s",emoji.OpenBook, aurora.BrightCyan(i.opts.ConfigPath))
 		logger.Info().Msgf("%s overriding %s with %s",
-			emoji.ConstructionWorker, aurora.BrightCyan(i.opts.ConfigURL),aurora.BrightCyan(i.opts.ConfigPath))
+			emoji.ConstructionWorker, aurora.BrightCyan("master config"),aurora.BrightCyan(i.opts.ConfigPath))
 		if i.cfg, err = i.readLocalConfig(); err != nil {
 			return
 		}
@@ -110,7 +109,7 @@ func (i *Inject) traverse() {
 				cp = aurora.Magenta(path)
 				skipped++
 			}
-			emoji.Printf(" %s  %s %s  \n",emoji.Minus, cp, aurora.BrightMagenta(symbol))
+			_,_ = emoji.Printf(" %s  %s %s  \n",emoji.Minus, cp, aurora.BrightMagenta(symbol))
 		}
 		return
 	}
@@ -201,11 +200,11 @@ func getCommentedLicense(config *Config, o Options, file string) (string, error)
 	var template string
 	var rule string
 	if template, ok = config.Golic.Licenses[o.Template]; !ok {
-		return "",fmt.Errorf("no license found for %s, check configuration (%s)",o.Template,o.ConfigURL)
+		return "",fmt.Errorf("no license found for %s, check configuration (.golic.yaml)",o.Template)
 	}
 	//if _, ok =  config.Golic.Rules[rule]; !ok {
 	if rule, ok =  matchRule(config, file); !ok {
-		return "",fmt.Errorf("no rule found for %s, check configuration (%s)", rule,o.ConfigURL)
+		return "",fmt.Errorf("no rule found for %s, check configuration (.golic.yaml)", rule)
 	}
 	template = strings.ReplaceAll(template,"{{copyright}}", o.Copyright)
 	if config.IsWrapped(rule) {
@@ -272,21 +271,7 @@ func (i *Inject) readLocalConfig() (*Config, error) {
 }
 
 func (i *Inject) readCommonConfig() (c *Config, err error) {
-	var client http.Client
-	var resp *http.Response
-	var b []byte
-	c = new(Config)
-	resp, err = client.Get(i.opts.ConfigURL)
-	if err != nil {
-		return
-	}
-	if resp.StatusCode >= http.StatusBadRequest {
-		return nil, fmt.Errorf("%s: %s returns %d", http.MethodGet, i.opts.ConfigURL, resp.StatusCode)
-	}
-	defer resp.Body.Close()
-	if b, err = ioutil.ReadAll(resp.Body); err != nil {
-		return
-	}
-	err = yaml.Unmarshal(b, c)
+	c = &Config{}
+	err = yaml.Unmarshal([]byte(i.opts.MasterConfig), c)
 	return
 }

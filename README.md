@@ -24,7 +24,7 @@ create `.licignore` in project root
 Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.4.7
+go install github.com/AbsaOSS/golic@v0.4.8
 golic inject -c="2021 MyCompany ltd."
 ```
 
@@ -58,8 +58,8 @@ Global Flags:
 ```
 
 ## Configuration
-Golic uses [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) by default.
-The master configuration is accessible from the URL, and if you need to change it, use the `-u` flag or create PR.
+Golic uses embeded [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) by default.
+The master configuration is compiled within binary, and if you need to change it, create PR.
 However, it is much better to create a local configuration that overrides the master configuration settings. All 
 you have to do is create a `.golic.yaml` file in the project root, or use the` -p` flag.
 Example below overrides master configuration by custom licenses
