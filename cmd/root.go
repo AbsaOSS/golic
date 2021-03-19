@@ -36,6 +36,8 @@ var logger = log.Log
 
 var exitCode = 0
 
+var masterconfig string
+
 var rootCmd = &cobra.Command{
 	Short: "golic license injector",
 	Long:  ``,
@@ -55,8 +57,13 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
 }
 
-func Execute() {
+func Execute(golic string) {
 	fmt.Println()
+	if Verbose {
+		fmt.Println(golic)
+		fmt.Println()
+	}
+	masterconfig = golic
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

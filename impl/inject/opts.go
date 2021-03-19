@@ -21,8 +21,8 @@ type Options struct {
 	LicIgnore string
 	Copyright string
 	Dry       bool
-	ConfigURL string
 	ConfigPath string
 	Template  string
 	ModifiedExitStatus bool
+	MasterConfig string
 }
