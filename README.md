@@ -1,5 +1,5 @@
 # golic
-declarative license tool, injecting licenses into source code
+declarative tool, injecting licenses into source code
 ```
 golic inject -c="2021 MyCompany ltd." --dry
 ```
