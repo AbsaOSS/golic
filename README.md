@@ -12,11 +12,11 @@ Install and run **GOLIC**
 go install github.com/AbsaOSS/golic@v0.5.0
 golic version
 ```
-Golic has two configurations `.licignore` and `.golic.yaml`. The first is based on the .gitignore and determines which 
-files will be selected for license injection. The second contains a configuration with license text and formatting rules.
+Golic has two configurations `.licignore` and `.golic.yaml`. The first determines which 
+files will be selected for license injection. The second contains a configuration of license text and formatting rules.
 
 ### .licignore
-.licignore determines which files will be selected for license injection. The syntax of the file is the same as for .gitignore
+.licignore determines which files will be selected for license injection. The syntax of the file is the same as for .gitignore.
 For simplicity, we have created inverse rules - we denied everything and allowed where to place license.
 
 Create `.licignore` in project root
@@ -35,11 +35,11 @@ Create `.licignore` in project root
 ### .golic.yaml
 golic.yaml contains a configuration with license text and formatting rules. Golic uses embeded [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) 
 by default. The master configuration is compiled and goes with binary, so it can change from version to version.
-If you need to change configuration, you can override it. For example, you want to change the text license, 
-or set comments for a specific file type. All you have to do is create a `.golic.yaml` file in the project root. Golic will 
-read it and overrides master configuration rules
+If you need to change configuration, you can override it. For example, you want to replace the license text, 
+or extend with new file types. All you have to do is to create a `.golic.yaml` file in the project root. Golic will 
+read it and overrides master configuration rules.
 
-Example below overrides master configuration by adding `apacheX` licenses and sets new rule for `*.go.txt` nad `.mzm`.
+Example below overrides master configuration by adding `apacheX` licenses and sets new rule for `*.go.txt` and `.mzm`.
 For more details see [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) example.
 ```yaml
 # .golic.yaml 
@@ -57,7 +57,7 @@ golic:
       prefix: "/*"
       suffix: "*/"
     .mzm:
-      prefix: ""    # no indent, no prefix or suffix, just place license text into top of the file 
+      prefix: ""  # no indent, no prefix or suffix, just place license text into top of the file 
 ```
 
 ### Running from commandline
