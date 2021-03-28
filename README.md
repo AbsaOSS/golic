@@ -39,7 +39,7 @@ If you need to change configuration, you can override it. For example, you want 
 or extend with new file types. All you have to do is to create a `.golic.yaml` file in the project root. Golic will 
 read it and overrides master configuration rules.
 
-Example below overrides master configuration by adding `apacheX` licenses and sets new rule for `*.go.txt` and `.mzm`.
+Example below overrides master configuration by adding `apacheX` licenses and sets new rule for `*name.txt` and `.mzm`.
 For more details see [master configuration](https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml) example.
 ```yaml
 # .golic.yaml 
@@ -53,7 +53,7 @@ golic:
       
       for more details see https://github.com/mycompany/myproject/LICENSE
   rules:
-    "*.go.txt":
+    "*name.txt":
       prefix: "/*"
       suffix: "*/"
     .mzm:
