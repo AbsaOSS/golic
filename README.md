@@ -3,7 +3,7 @@ declarative license tool, injecting licenses into source code
 ```
 golic inject -c="2021 MyCompany ltd." --dry
 ```
-![Screenshot 2021-03-08 at 11 42 52](https://user-images.githubusercontent.com/7195836/110310942-6d2f3680-8003-11eb-9540-b2e21b4f2b87.png)
+![Screenshot 2021-03-28 at 15 44 33](https://user-images.githubusercontent.com/7195836/112754458-80b73700-8fdc-11eb-9a47-e21fca29219a.png)
 
 ## Quickstart 
 Install and run **GOLIC**
