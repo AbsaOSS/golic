@@ -17,7 +17,6 @@
 lint:
 	golangci-lint run
 
-.PHONY: license
 license:
-	GO111MODULE=on GOSUMDB=off go get github.com/AbsaOSS/golic@v0.1.2
-    $(GOBIN)/golic inject -c="2021 ABSA Group Limited" -l=.licignore
+	go install github.com/AbsaOSS/golic@v0.5.0
+	golic inject -c="2021 Absa Group Limited"
