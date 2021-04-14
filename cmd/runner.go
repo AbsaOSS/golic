@@ -40,7 +40,7 @@ func Command(service Service) *ServiceRunner {
 
 //Run service once and panics if service is broken
 func (r *ServiceRunner) MustRun() int {
-	logger.Info().Msgf("%s command %s started",emoji.Tractor, r.service)
+	logger.Info().Msgf("%s command %s started", emoji.Tractor, r.service)
 	err := r.service.Run()
 	guard.FailOnError(err, "command %s failed", r.service)
 	return r.service.ExitCode()

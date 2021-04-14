@@ -20,6 +20,7 @@ package main
 import (
 	_ "embed"
 	"fmt"
+
 	"github.com/AbsaOSS/golic/cmd"
 )
 
