@@ -8,7 +8,7 @@ golic inject -c="2021 MyCompany ltd." --dry
 Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.5.0
+go install github.com/AbsaOSS/golic@v0.6.0
 golic version
 ```
 Golic has two configurations `.licignore` and `.golic.yaml`. The first determines which 
@@ -72,18 +72,22 @@ Usually you want to find out that something went wrong during CI / CD. For examp
 In terms of golic, we want the build pipe to end with an error if we find at least one file with a missing license.
 The `-x` argument handles that.
 ```shell
-  go install github.com/AbsaOSS/golic@v0.5.0
+  go install github.com/AbsaOSS/golic@v0.6.0
   golic inject --dry -x -t apache2
 ```
 
 ## Updating license
-The moment you need to change or delete the license text, the `remove` command comes into play.
-`remove` uses exactly the same flags as `inject`, but unlike `inject`, it deletes the license from all files 
-determined by `.licignore`. Because GoLic has no state, the `remove` command deletes based on the criteria 
-specified in the configuration and `.licignore`, so the configuration of deleted licenses must be the same as 
-the configuration that injected them.
+The moment you need to change or delete the license text, the `remove` command comes into play. It deletes license 
+depending on `.golic.yaml` and `.licignore`. If you want to update the license (e.g. the text in the license needs to be changed),
+you must first remove the license and then re-inject the updated version. I highly recommend using the `--dry`argument 
+before removing the license.
 ```shell
-golic remove --dry -t apache2
+# updating apacheX license
+
+# remove apacheX license from the source
+golic remove -t apacheX
+# now update apacheX in .golic.yaml and inject back
+golic inject -t apacheX
 ```
 
 ## Usage
