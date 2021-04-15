@@ -76,12 +76,24 @@ The `-x` argument handles that.
   golic inject --dry -x -t apache2
 ```
 
+## Updating license
+The moment you need to change or delete the license text, the `remove` command comes into play.
+`remove` uses exactly the same flags as `inject`, but unlike `inject`, it deletes the license from all files 
+determined by `.licignore`. Because GoLic has no state, the `remove` command deletes based on the criteria 
+specified in the configuration and `.licignore`, so the configuration of deleted licenses must be the same as 
+the configuration that injected them.
+```shell
+golic remove --dry -t apache2
+```
+
 ## Usage
 ```
 Available Commands:
   help        Help about any command
-  inject      Injects license
+  inject      Injects licenses
+  remove      Remove licenses
   version     Print the version number of Golic
+
 
 Flags:
   -h, --help      help for this command
@@ -92,7 +104,6 @@ Usage inject:
 
 Flags:
   -p, --config-path string   path to the local configuration overriding config-url (default ".golic.yaml")
-  -u, --config-url string    default config URL (default "https://raw.githubusercontent.com/AbsaOSS/golic/main/.golic.yaml")
   -c, --copyright string     company initials entered into license (default "2021 MyCompany")
   -d, --dry                  dry run
   -h, --help                 help for inject
@@ -100,6 +111,16 @@ Flags:
   -x, --modified-exit        If enabled, exits with status 1 when any file is modified. The settings is used by CI
   -t, --template string      license key (default "apache2")
 
+Usage remove:
+   remove [flags]
+
+Flags:
+  -p, --config-path string   path to the local configuration overriding config-url (default ".golic.yaml")
+  -c, --copyright string     company initials entered into license (default "2021 MyCompany")
+  -d, --dry                  dry run
+  -h, --help                 help for inject
+  -l, --licignore string     .licignore path (default ".licignore")
+  -t, --template string      license key (default "apache2")
 
 Global Flags:
   -v, --verbose   verbose output

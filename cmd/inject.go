@@ -21,23 +21,23 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/AbsaOSS/golic/impl/inject"
+	"github.com/AbsaOSS/golic/impl/update"
 
 	"github.com/enescakir/emoji"
 	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 )
 
-var injectOptions inject.Options
+var injectOptions update.Options
 
 var injectCmd = &cobra.Command{
 	Use:   "inject",
-	Short: "Injects license",
+	Short: "Injects licenses",
 	Long:  ``,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		if _, err := os.Stat(injectOptions.LicIgnore); os.IsNotExist(err) {
-			logger.Error().Msgf("invalid license path '%s'",injectOptions.LicIgnore)
+			logger.Error().Msgf("invalid license path '%s'", injectOptions.LicIgnore)
 			_ = cmd.Help()
 			os.Exit(1)
 		}
@@ -47,7 +47,8 @@ var injectCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		injectOptions.MasterConfig = masterconfig
-		i := inject.New(ctx, injectOptions)
+		injectOptions.Type = update.LicenseInject
+		i := update.New(ctx, injectOptions)
 		exitCode = Command(i).MustRun()
 		if exitCode == 0 {
 			fmt.Printf(" %s %s\n", emoji.Rocket, aurora.BrightWhite("done"))
@@ -65,6 +66,6 @@ func init() {
 	injectCmd.Flags().StringVarP(&injectOptions.Copyright, "copyright", "c", "2021 MyCompany",
 		"company initials entered into license")
 	injectCmd.Flags().BoolVarP(&injectOptions.Dry, "dry", "d", false, "dry run")
-	injectCmd.Flags().StringVarP(&injectOptions.ConfigPath, "config-path","p", ".golic.yaml","path to the local configuration overriding config-url" )
+	injectCmd.Flags().StringVarP(&injectOptions.ConfigPath, "config-path", "p", ".golic.yaml", "path to the local configuration overriding config-url")
 	rootCmd.AddCommand(injectCmd)
 }
