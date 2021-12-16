@@ -1,7 +1,7 @@
 # golic
 A declarative tool injecting licenses into source code
 ```
-golic inject -c="2021 MyCompany ltd." --dry
+golic inject -c="2022 MyCompany ltd." --dry
 ```
 ![Screenshot 2021-03-30 at 17 04 50](https://user-images.githubusercontent.com/7195836/113011391-0c19ff00-917a-11eb-9579-60851a2f9be2.png)
 ## Quickstart 
@@ -108,7 +108,7 @@ Usage inject:
 
 Flags:
   -p, --config-path string   path to the local configuration overriding config-url (default ".golic.yaml")
-  -c, --copyright string     company initials entered into license (default "2021 MyCompany")
+  -c, --copyright string     company initials entered into license (default "2022 MyCompany")
   -d, --dry                  dry run
   -h, --help                 help for inject
   -l, --licignore string     .licignore path (default ".licignore")
@@ -120,7 +120,7 @@ Usage remove:
 
 Flags:
   -p, --config-path string   path to the local configuration overriding config-url (default ".golic.yaml")
-  -c, --copyright string     company initials entered into license (default "2021 MyCompany")
+  -c, --copyright string     company initials entered into license (default "2022 MyCompany")
   -d, --dry                  dry run
   -h, --help                 help for inject
   -l, --licignore string     .licignore path (default ".licignore")

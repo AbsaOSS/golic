@@ -7,11 +7,5 @@
 !*.yaml
 !*.go
 !Makefile
-
 # ...even if they are in subdirectories
 !*/
-
-# except these in subdirs
-/**/.gitignore
-/**/*golic.yaml
-/.idea/**/*.xml
