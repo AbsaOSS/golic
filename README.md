@@ -8,7 +8,7 @@ golic inject -c="2022 MyCompany ltd." --dry
 Install and run **GOLIC**
 ```shell
 # GO 1.16 
-go install github.com/AbsaOSS/golic@v0.6.0
+go install github.com/AbsaOSS/golic@latest
 golic version
 ```
 Golic has two configurations `.licignore` and `.golic.yaml`. The first determines which 
@@ -72,7 +72,7 @@ Usually you want to find out that something went wrong during CI / CD. For examp
 In terms of golic, we want the build pipe to end with an error if we find at least one file with a missing license.
 The `-x` argument handles that.
 ```shell
-  go install github.com/AbsaOSS/golic@v0.6.0
+  go install github.com/AbsaOSS/golic@latest
   golic inject --dry -x -t apache2
 ```
 
