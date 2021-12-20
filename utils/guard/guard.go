@@ -1,5 +1,6 @@
 // Package guard throws errors or panics when error occur
 package guard
+
 /*
 Copyright 2022 Absa Group Limited
 

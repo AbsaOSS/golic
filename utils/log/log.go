@@ -1,5 +1,6 @@
 // Package log wraps zerolog logger and provides standard log functionality
 package log
+
 /*
 Copyright 2022 Absa Group Limited
 
