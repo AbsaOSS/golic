@@ -18,5 +18,5 @@ lint:
 	golangci-lint run
 
 license:
-	go install github.com/AbsaOSS/golic@v0.6.0
+	go install github.com/AbsaOSS/golic@latest
 	golic inject -c="2022 Absa Group Limited"
